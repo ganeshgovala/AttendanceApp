@@ -9,6 +9,7 @@
 .history
 .svn/
 .android/
+venv/
 # Exclude Android Virtual Devices (AVD) and Emulator-related files
 *.avd/
 *.ini

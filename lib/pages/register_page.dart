@@ -231,14 +231,14 @@ class _RegisterPageState extends State<RegisterPage> {
                           _regNoController.text, _passwordController.text);
                       if (result == "Valid") {
                         await _saveLoginStatus(_regNoController.text.substring(0,10));
-                        await addUserData(_regNoController.text.substring(0, 10),
+                        await addUserData(_regNoController.text.substring(0, 10).toString(),
                             _passwordController.text, state.result['name']!);
                         await addAttendanceData(
                             _regNoController.text.substring(0, 10),
-                            state.result['till_now']!,
-                            state.result['till_now_attended']!,
-                            state.result['this_month']!,
-                            state.result['this_month_attended']!);
+                            state.result['till_now']!.toString(),
+                            state.result['till_now_attended']!.toString(),
+                            state.result['this_month']!.toString(),
+                            state.result['this_month_attended']!.toString());
                         Navigator.push(
                             context,
                             MaterialPageRoute(

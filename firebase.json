@@ -1,25 +1,39 @@
 {
-    "flutter":{
-        "platforms":{
-            "android":{
-                "default":{
-                    "projectId":"attendance-app-a8d84",
-                    "appId":"1:629628007764:android:0c23e184485855bbb704c1",
-                    "fileOutput":"android/app/google-services.json"
-                }
-            },
-            "dart":{
-                "lib/firebase_options.dart":{
-                    "projectId":"attendance-app-a8d84",
-                    "configurations":{
-                        "android":"1:629628007764:android:0c23e184485855bbb704c1",
-                        "ios":"1:629628007764:ios:d78ef0c133cbba12b704c1",
-                        "macos":"1:629628007764:ios:d78ef0c133cbba12b704c1",
-                        "web":"1:629628007764:web:b81db75f42e0866db704c1",
-                        "windows":"1:629628007764:web:d3dc528659661791b704c1"
-                    }
-                }
-            }
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "attendance-app-a8d84",
+          "appId": "1:629628007764:android:0c23e184485855bbb704c1",
+          "fileOutput": "android/app/google-services.json"
         }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "attendance-app-a8d84",
+          "configurations": {
+            "android": "1:629628007764:android:0c23e184485855bbb704c1",
+            "ios": "1:629628007764:ios:d78ef0c133cbba12b704c1",
+            "macos": "1:629628007764:ios:d78ef0c133cbba12b704c1",
+            "web": "1:629628007764:web:b81db75f42e0866db704c1",
+            "windows": "1:629628007764:web:d3dc528659661791b704c1"
+          }
+        }
+      }
     }
+  },
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
 }

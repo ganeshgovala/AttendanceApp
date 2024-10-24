@@ -56,15 +56,10 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       final Map<String, dynamic> result = jsonDecode(response.body);
       if(result['message'] != "Invalid") {
         return {
-          "till_now": int.tryParse(result['message']['till_now'].toString()) ?? 0,
-          "till_now_attended":
-              int.tryParse(result['message']['till_now_attended'].toString()) ??
-                  0,
-          "this_month":
-              int.tryParse(result['message']['this_month'].toString()) ?? 0,
-          "this_month_attended":
-              int.tryParse(result['message']['this_month_attended'].toString()) ??
-                  0,
+          "till_now": result['message']['till_now'].toString(),
+          "till_now_attended": result['message']['till_now_attended'].toString(),
+          "this_month": result['message']['this_month'].toString(),
+          "this_month_attended": result['message']['this_month_attended'].toString(),
           "name": result['message']['name'].toString(),
         };
       }
