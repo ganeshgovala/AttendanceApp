@@ -66,10 +66,15 @@ class _TillNowPageState extends State<TillNowPage> {
           Container(
             height: 200,
             width: MediaQuery.of(context).size.width,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('lib/images/YellowBackground.jpg'),
-                fit: BoxFit.cover,
+            // decoration: const BoxDecoration(
+            //   image: DecorationImage(
+            //     image: AssetImage('lib/images/YellowBackground.jpg'),
+            //     fit: BoxFit.cover,
+            //   ),
+            // ),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [const Color(0xFFfc4a1a), const Color(0xFFF7b733)]
               ),
             ),
           ),

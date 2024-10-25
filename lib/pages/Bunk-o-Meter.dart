@@ -74,7 +74,7 @@ class _BunkOMeterPageState extends State<BunkOMeterPage> {
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('lib/images/PurpleBackground.jpg'),
+                  image: AssetImage('lib/assets/images/PurpleBackground.jpg'),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.circular(30),

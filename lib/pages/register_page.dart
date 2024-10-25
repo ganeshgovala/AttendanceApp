@@ -1,10 +1,9 @@
-import 'package:attendance/BloC/AttendanceBloc.dart';
 import 'package:attendance/BloC/RegisterBloc.dart';
 import 'package:attendance/Colors.dart';
 import 'package:attendance/TextStyles/TextStyles.dart';
 import 'package:attendance/auth/auth_service.dart';
 import 'package:attendance/components/InputField.dart';
-import 'package:attendance/pages/HomePage.dart';
+import 'package:attendance/pages/bottom_navigation_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -132,7 +131,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               SizedBox(height: 10),
               Image.asset(
-                'lib/images/Security.png',
+                'lib/assets/images/Security.png',
                 height: 150,
               ),
               SizedBox(height: 20),
@@ -239,14 +238,11 @@ class _RegisterPageState extends State<RegisterPage> {
                             state.result['till_now_attended']!.toString(),
                             state.result['this_month']!.toString(),
                             state.result['this_month_attended']!.toString());
-                        Navigator.push(
+                        Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => BlocProvider(
-                                    create: (context) => AttendanceBloc(),
-                                    child: HomePage(
-                                        reg_no: _regNoController.text
-                                            .substring(0, 10)))));
+                                builder: (context) =>  BottomNavigationBarPage(reg_no: _regNoController.text.substring(0,10))
+                            ));
                       }
                     });
                   } else if (state.result['till_now'] == 'Invalid') {

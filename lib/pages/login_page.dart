@@ -6,7 +6,7 @@ import 'package:attendance/BloC/RegisterBloc.dart';
 import 'package:attendance/Colors.dart';
 import 'package:attendance/TextStyles/TextStyles.dart';
 import 'package:attendance/components/InputField.dart';
-import 'package:attendance/pages/HomePage.dart';
+import 'package:attendance/pages/bottom_navigation_bar.dart';
 import 'package:attendance/pages/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -68,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               Image.asset(
-                'lib/images/Security.png',
+                'lib/assets/images/Security.png',
                 height: 220,
               ),
               SizedBox(
@@ -145,11 +145,7 @@ class _LoginPageState extends State<LoginPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => BlocProvider(
-                            create: (context) => AttendanceBloc(),
-                            child: HomePage(
-                                reg_no: _regNoController.text.substring(0, 10)),
-                          ),
+                          builder: (context) => BottomNavigationBarPage(reg_no: _regNoController.text.substring(0, 10)),
                         ),
                       );
                     } else {

@@ -20,7 +20,7 @@ class OpeningPage extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
               image: DecorationImage(
-            image: AssetImage('lib/images/openingPage.jpeg'),
+            image: AssetImage('lib/assets/images/openingPage.jpeg'),
             fit: BoxFit.cover,
           )),
         ),

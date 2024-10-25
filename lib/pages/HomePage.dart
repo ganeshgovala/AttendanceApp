@@ -109,11 +109,11 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final attendancebloc = BlocProvider.of<AttendanceBloc>(context);
     return Scaffold(
-      backgroundColor: CustomColors().backgroundColor,
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Padding(
-          padding: const EdgeInsets.all(14.0),
+          padding: const EdgeInsets.all(18.0),
           child: Column(
             children: [
               Padding(
@@ -125,12 +125,12 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Text("Whats'up",
                             style: Textstyles().subHeading(
-                                const Color.fromARGB(255, 157, 157, 157))),
+                                const Color.fromARGB(255, 94, 94, 94))),
                         Container(
-                            width: MediaQuery.of(context).size.width - 45,
+                            width: MediaQuery.of(context).size.width - 65,
                             child: Text(username,
                                 style: Textstyles().boldTextStyle(
-                                    24, const Color.fromARGB(255, 255, 255, 255))))
+                                    24, const Color.fromARGB(255, 21, 21, 21))))
                       ],
                     )
                   ],
@@ -138,17 +138,39 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(height: 16),
               GestureDetector(
-                onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context) => TillNowPage(reg_no: widget.reg_no, password: password!,)));},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => TillNowPage(
+                                reg_no: widget.reg_no,
+                                password: password!,
+                              )));
+                },
                 child: Container(
                     width: MediaQuery.of(context).size.width,
                     padding: EdgeInsets.all(26),
                     decoration: BoxDecoration(
-                        image: DecorationImage(
-                          colorFilter: ColorFilter.mode(const Color.fromARGB(26, 0, 0, 0), BlendMode.darken),
-                          image: AssetImage('lib/images/TillNowBackground.jpg'),
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius: BorderRadius.circular(50),),
+                      // image: DecorationImage(
+                      //   colorFilter: ColorFilter.mode(const Color.fromARGB(26, 0, 0, 0), BlendMode.darken),
+                      //   image: AssetImage('lib/assets/images/TillNowBackground.jpg'),
+                      //   fit: BoxFit.cover,
+                      // ),
+                      gradient: LinearGradient(
+                        colors: [
+                          const Color.fromARGB(255, 0, 255, 8),
+                          const Color.fromARGB(255, 31, 243, 197),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                            color: const Color.fromARGB(36, 0, 0, 0),
+                            blurRadius: 10),
+                      ],
+                      borderRadius: BorderRadius.circular(50),
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -157,7 +179,8 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Text(
                               "Till Now",
-                              style: Textstyles().subHeading(Colors.black),
+                              style: Textstyles().subHeading(
+                                  const Color.fromARGB(255, 18, 18, 18)),
                             ),
                             GestureDetector(
                               onTap: () async {
@@ -176,7 +199,8 @@ class _HomePageState extends State<HomePage> {
                               child: Container(
                                   padding: EdgeInsets.all(8),
                                   decoration: BoxDecoration(
-                                    color: const Color.fromARGB(29, 255, 255, 255),
+                                      color:
+                                          const Color.fromARGB(29, 98, 98, 98),
                                       borderRadius: BorderRadius.circular(50)),
                                   child: Icon(Icons.replay_outlined,
                                       color: const Color.fromARGB(219, 0, 0, 0),
@@ -196,24 +220,24 @@ class _HomePageState extends State<HomePage> {
                                   ConnectionState.waiting) {
                                 return Text(
                                   "Loading...",
-                                  style: Textstyles()
-                                      .boldTextStyle(55, const Color(0xFF161616)),
+                                  style: Textstyles().boldTextStyle(
+                                      55, const Color(0xFF161616)),
                                 );
                               }
                               if (snapshot.hasError) {
                                 return Text(
                                   "Error 🙁",
-                                  style: Textstyles()
-                                      .boldTextStyle(55, const Color(0xFF161616)),
+                                  style: Textstyles().boldTextStyle(
+                                      55, const Color(0xFF161616)),
                                 );
                               }
-                              final DocumentSnapshot<Map<String, dynamic>> data =
-                                  snapshot.data!;
+                              final DocumentSnapshot<Map<String, dynamic>>
+                                  data = snapshot.data!;
                               if (data.exists) {
                                 return Text(
                                   data['till_now'] + "%",
-                                  style: Textstyles()
-                                      .boldTextStyle(55, const Color(0xFF161616)),
+                                  style: Textstyles().boldTextStyle(
+                                      55, const Color(0xFF161616)),
                                 );
                               }
                               return Text(
@@ -226,8 +250,9 @@ class _HomePageState extends State<HomePage> {
                             padding: EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 20),
                             decoration: BoxDecoration(
-                                color: const Color.fromARGB(50, 255, 255, 255),
-                                borderRadius: BorderRadius.circular(50)),
+                              color: const Color.fromARGB(50, 255, 255, 255),
+                              borderRadius: BorderRadius.circular(50),
+                            ),
                             child: StreamBuilder(
                               stream: FirebaseFirestore.instance
                                   .collection('Users')
@@ -244,7 +269,7 @@ class _HomePageState extends State<HomePage> {
                                         const Color.fromARGB(255, 39, 39, 39)),
                                   );
                                 }
-                
+
                                 if (snapshot.hasError) {
                                   return Text(
                                     "Some Error",
@@ -252,7 +277,7 @@ class _HomePageState extends State<HomePage> {
                                         const Color.fromARGB(255, 39, 39, 39)),
                                   );
                                 }
-                
+
                                 final DocumentSnapshot<Map<String, dynamic>>
                                     data = snapshot.data!;
                                 return Text(
@@ -266,28 +291,74 @@ class _HomePageState extends State<HomePage> {
                     )),
               ),
               SizedBox(height: 16),
-              Material(
-                elevation: 4,
-                borderRadius: BorderRadius.circular(50),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ThisMonthPage(reg_no: widget.reg_no, password: password!,)));
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    padding:
-                        EdgeInsets.only(top: 30, left: 30, right: 30, bottom: 20),
-                    decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 255, 255, 255),
-                        borderRadius: BorderRadius.circular(50)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "This Month",
-                          style: Textstyles().subHeading(const Color(0xFF161616)),
-                        ),
-                        StreamBuilder(
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ThisMonthPage(
+                                reg_no: widget.reg_no,
+                                password: password!,
+                              )));
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding:
+                      EdgeInsets.only(top: 30, left: 30, right: 30, bottom: 20),
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 255, 255, 255),
+                    borderRadius: BorderRadius.circular(50),
+                    boxShadow: [
+                      BoxShadow(
+                          color: const Color.fromARGB(36, 0, 0, 0),
+                          blurRadius: 10),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "This Month",
+                        style: Textstyles().subHeading(const Color(0xFF161616)),
+                      ),
+                      StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection('Users')
+                              .doc(widget.reg_no)
+                              .collection('Attendance')
+                              .doc('AttendanceInfo')
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Text(
+                                "Loading...",
+                                style: Textstyles()
+                                    .boldTextStyle(55, const Color(0xFF161616)),
+                              );
+                            }
+                            if (snapshot.hasError) {
+                              return Text(
+                                "Error 🙁",
+                                style: Textstyles()
+                                    .boldTextStyle(55, const Color(0xFF161616)),
+                              );
+                            }
+                            final DocumentSnapshot<Map<String, dynamic>> data =
+                                snapshot.data!;
+                            return Text(
+                              data['this_month'] + "%",
+                              style: Textstyles()
+                                  .boldTextStyle(55, const Color(0xFF161616)),
+                            );
+                          }),
+                      Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 230, 230, 230),
+                              borderRadius: BorderRadius.circular(50)),
+                          child: StreamBuilder(
                             stream: FirebaseFirestore.instance
                                 .collection('Users')
                                 .doc(widget.reg_no)
@@ -299,135 +370,99 @@ class _HomePageState extends State<HomePage> {
                                   ConnectionState.waiting) {
                                 return Text(
                                   "Loading...",
-                                  style: Textstyles()
-                                      .boldTextStyle(55, const Color(0xFF161616)),
-                                );
-                              }
-                              if (snapshot.hasError) {
-                                return Text(
-                                  "Error 🙁",
-                                  style: Textstyles()
-                                      .boldTextStyle(55, const Color(0xFF161616)),
-                                );
-                              }
-                              final DocumentSnapshot<Map<String, dynamic>> data =
-                                  snapshot.data!;
-                              return Text(
-                                data['this_month'] + "%",
-                                style: Textstyles()
-                                    .boldTextStyle(55, const Color(0xFF161616)),
-                              );
-                            }),
-                        Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
-                            decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 230, 230, 230),
-                                borderRadius: BorderRadius.circular(50)),
-                            child: StreamBuilder(
-                              stream: FirebaseFirestore.instance
-                                  .collection('Users')
-                                  .doc(widget.reg_no)
-                                  .collection('Attendance')
-                                  .doc('AttendanceInfo')
-                                  .snapshots(),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return Text(
-                                    "Loading...",
-                                    style: Textstyles().subHeading(
-                                        const Color.fromARGB(255, 39, 39, 39)),
-                                  );
-                                }
-                  
-                                if (snapshot.hasError) {
-                                  return Text(
-                                    "Some Error",
-                                    style: Textstyles().subHeading(
-                                        const Color.fromARGB(255, 39, 39, 39)),
-                                  );
-                                }
-                  
-                                final DocumentSnapshot<Map<String, dynamic>>
-                                    data = snapshot.data!;
-                                return Text(
-                                  "Attended : ${data['this_month_attended']}",
                                   style: Textstyles().subHeading(
                                       const Color.fromARGB(255, 39, 39, 39)),
                                 );
-                              },
-                            )),
-                      ],
-                    ),
+                              }
+
+                              if (snapshot.hasError) {
+                                return Text(
+                                  "Some Error",
+                                  style: Textstyles().subHeading(
+                                      const Color.fromARGB(255, 39, 39, 39)),
+                                );
+                              }
+
+                              final DocumentSnapshot<Map<String, dynamic>>
+                                  data = snapshot.data!;
+                              return Text(
+                                "Attended : ${data['this_month_attended']}",
+                                style: Textstyles().subHeading(
+                                    const Color.fromARGB(255, 39, 39, 39)),
+                              );
+                            },
+                          )),
+                    ],
                   ),
                 ),
               ),
               SizedBox(height: 16),
-              Material(
-                borderRadius: BorderRadius.circular(30),
-                elevation: 4,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 255, 255, 255),
-                      borderRadius: BorderRadius.circular(30)),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Date Wise",
-                            style: Textstyles()
-                                .boldTextStyle(24, const Color(0xFF161616)),
-                          ),
-                          PageNavigatorArrow(
-                            onTap: () {},
-                          ),
-                        ],
-                      ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                         color: const Color.fromARGB(36, 0, 0, 0),
+                          blurRadius: 10),
                     ],
-                  ),
+                    color: const Color.fromARGB(255, 255, 255, 255),
+                    borderRadius: BorderRadius.circular(30)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Date Wise",
+                          style: Textstyles()
+                              .boldTextStyle(24, const Color(0xFF161616)),
+                        ),
+                        PageNavigatorArrow(
+                          onTap: () {},
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
               SizedBox(height: 12),
-              Material(
-                elevation: 4,
-                borderRadius: BorderRadius.circular(30),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 255, 255, 255),
-                      borderRadius: BorderRadius.circular(30)),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Bunk-O-meter",
-                            style: Textstyles()
-                                .boldTextStyle(24, const Color(0xFF161616)),
-                          ),
-                          PageNavigatorArrow(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => BunkOMeterPage(
-                                            reg_no: widget.reg_no,
-                                          )));
-                            },
-                          ),
-                        ],
-                      ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                          color: const Color.fromARGB(36, 0, 0, 0),
+                          blurRadius: 10),
                     ],
-                  ),
+                    color: const Color.fromARGB(255, 255, 255, 255),
+                    borderRadius: BorderRadius.circular(30)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Bunk-O-meter",
+                          style: Textstyles()
+                              .boldTextStyle(24, const Color(0xFF161616)),
+                        ),
+                        PageNavigatorArrow(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => BunkOMeterPage(
+                                          reg_no: widget.reg_no,
+                                        )));
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               )
             ],

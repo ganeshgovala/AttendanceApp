@@ -8,11 +8,8 @@ import 'package:http/http.dart' as http;
 class ThisMonthPage extends StatefulWidget {
   final String reg_no;
   final String password;
-  const ThisMonthPage({
-    required this.reg_no,
-    required this.password,
-    super.key
-  });
+  const ThisMonthPage(
+      {required this.reg_no, required this.password, super.key});
 
   @override
   State<ThisMonthPage> createState() => _ThisMonthPageState();
@@ -24,10 +21,7 @@ class _ThisMonthPageState extends State<ThisMonthPage> {
   void fetchSubWiseData(String reg_no, String password) async {
     print("Fetching data...");
     final url = Uri.parse('http://127.0.0.1:5000/thisMonthSubWise');
-    final Map<String, String> data = {
-      'username': reg_no,
-      'password': password
-    };
+    final Map<String, String> data = {'username': reg_no, 'password': password};
     final response = await http.post(
       url,
       headers: {
@@ -67,9 +61,17 @@ class _ThisMonthPageState extends State<ThisMonthPage> {
             height: 170,
             width: MediaQuery.of(context).size.width,
             decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('lib/images/YellowBackground.jpg'),
-                fit: BoxFit.cover,
+              // image: DecorationImage(
+              //   image: AssetImage('lib/images/YellowBackground.jpg'),
+              //   fit: BoxFit.cover,
+              // ),
+              gradient: LinearGradient(
+                colors: [
+                  const Color.fromARGB(255, 0, 255, 8),
+                  const Color.fromARGB(255, 31, 243, 197),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
             ),
           ),
@@ -208,10 +210,9 @@ class _ThisMonthPageState extends State<ThisMonthPage> {
                                 }
                                 final DocumentSnapshot<Map<String, dynamic>>
                                     data = snapshot.data!;
-                                return Text(
-                                  "${data['till_now_attended']}",
-                                  style: Textstyles().boldTextStyle(25, Colors.black)
-                                );
+                                return Text("${data['till_now_attended']}",
+                                    style: Textstyles()
+                                        .boldTextStyle(25, Colors.black));
                               },
                             )
                           ],
@@ -234,18 +235,15 @@ class _ThisMonthPageState extends State<ThisMonthPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Subject", style: GoogleFonts.figtree(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700
-                    )),
-                    Text("Attended", style: GoogleFonts.figtree(
-                      fontSize:20,
-                      fontWeight: FontWeight.w700
-                    )),
-                    Text("Percentage", style: GoogleFonts.figtree(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700
-                    )),
+                    Text("Subject",
+                        style: GoogleFonts.figtree(
+                            fontSize: 20, fontWeight: FontWeight.w700)),
+                    Text("Attended",
+                        style: GoogleFonts.figtree(
+                            fontSize: 20, fontWeight: FontWeight.w700)),
+                    Text("Percentage",
+                        style: GoogleFonts.figtree(
+                            fontSize: 20, fontWeight: FontWeight.w700)),
                   ],
                 ),
               ),
@@ -257,16 +255,18 @@ class _ThisMonthPageState extends State<ThisMonthPage> {
             right: 18,
             bottom: 20,
             child: subdata == null
-                ? const Center(child:  Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator(
-                      color: Colors.black,
-                    ),
-                    SizedBox(height: 10),
-                    Text("This may take a while", style: TextStyle(fontSize: 20))
-                  ],
-                ))
+                ? const Center(
+                    child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(
+                        color: Colors.black,
+                      ),
+                      SizedBox(height: 10),
+                      Text("This may take a while",
+                          style: TextStyle(fontSize: 20))
+                    ],
+                  ))
                 : subdata!.isEmpty
                     ? const Center(child: Text("No data available"))
                     : SubWiseAttendance(),
@@ -308,19 +308,17 @@ class _ThisMonthPageState extends State<ThisMonthPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                subdata![index][2].toString() + " / ",
-                                style: GoogleFonts.figtree(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            )
-                              ),
+                              Text(subdata![index][2].toString() + " / ",
+                                  style: GoogleFonts.figtree(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  )),
                               Text(
                                 subdata![index][1].toString(),
                                 style: GoogleFonts.figtree(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ],
                           ),
@@ -328,13 +326,11 @@ class _ThisMonthPageState extends State<ThisMonthPage> {
                         Container(
                           alignment: Alignment.center,
                           width: 92,
-                          child: Text(
-                            subdata![index][3].toString(),
-                            style: GoogleFonts.figtree(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            )
-                          ),
+                          child: Text(subdata![index][3].toString(),
+                              style: GoogleFonts.figtree(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              )),
                         ),
                       ],
                     ),
@@ -342,10 +338,7 @@ class _ThisMonthPageState extends State<ThisMonthPage> {
                 ],
               ),
             ),
-            Divider(
-              thickness: 2,
-              color: Colors.grey[400]
-            )
+            Divider(thickness: 2, color: Colors.grey[400])
           ],
         );
       },
