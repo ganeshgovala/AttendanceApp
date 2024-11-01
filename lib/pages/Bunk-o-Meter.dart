@@ -16,7 +16,17 @@ class BunkOMeterPage extends StatefulWidget {
 
 class _BunkOMeterPageState extends State<BunkOMeterPage> {
 
-  int total_working_hours = 176;
+  List<String> months = ['January', 'February', 'March', 'April', 'May', 'June','July', 'August', 'September', 'October', 'November', 'December'];
+  int date = DateTime.now().month;
+  Future<void> getTotalWorkingDays() async {
+    DocumentSnapshot<Map<String, dynamic>> documentSnapshot = await FirebaseFirestore.instance.collection('WorkingDays').doc(months[date - 1]).get();
+    final data = documentSnapshot.data();
+    setState(() {
+      total_working_hours = data!['total'];
+    });
+  }
+
+  int total_working_hours = 0;
   int attended = 0;
   int total = 0;
   final month = DateTime.now();
@@ -36,29 +46,41 @@ class _BunkOMeterPageState extends State<BunkOMeterPage> {
     // TODO: implement initState
     super.initState();
     fetchData(widget.reg_no);
+    getTotalWorkingDays();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(Icons.arrow_back_ios)),
-      ),
       body: Padding(
-        padding: const EdgeInsets.all(18.0),
+        padding: const EdgeInsets.all(26.0),
         child: Column(
           children: [
+            Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.only(top: 10, bottom: 10, left: 15, right: 5),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.black26,
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    child: Icon(Icons.arrow_back_ios, size: 22),
+                  ),
+                )
+              ],
+            ),
             Container(
               padding: EdgeInsets.symmetric(vertical: 14, horizontal: 24),
               decoration: BoxDecoration(
                 color: CustomColors().backgroundColor,
                 borderRadius: BorderRadius.circular(100)
               ),
-              child: Text("October", style: TextStyle(
+              child: Text(months[date - 1], style: TextStyle(
                 color: Colors.white,
                 fontSize: 14,
               ))
@@ -73,9 +95,17 @@ class _BunkOMeterPageState extends State<BunkOMeterPage> {
               width: MediaQuery.of(context).size.width - 36,
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('lib/assets/images/PurpleBackground.jpg'),
-                  fit: BoxFit.cover,
+                // image: DecorationImage(
+                //   image: AssetImage('lib/assets/images/PurpleBackground.jpg'),
+                //   fit: BoxFit.cover,
+                // ),
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    const Color(0xFF6025F5),
+                    const Color(0xFFFF5555),
+                  ] 
                 ),
                 borderRadius: BorderRadius.circular(30),
               ),

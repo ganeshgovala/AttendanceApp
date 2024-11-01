@@ -39,7 +39,7 @@ class AttendanceBloc extends Bloc<AttendanceEvent, AttendanceState> {
   }
 
   Future<Map<String,String>> validationChecker(String reg_no, String password) async {
-    final url = Uri.parse('http://127.0.0.1:5000/updateData');
+    final url = Uri.parse('https://pythonapi-dtrp.onrender.com/updateData');
     final Map<String, String> data = {
       'username' : reg_no,
       'password' : password,

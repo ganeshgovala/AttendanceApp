@@ -39,7 +39,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
   Future<Map<String, dynamic>> validationChecker(
       String reg_no, String password) async {
-    final url = Uri.parse('http://127.0.0.1:5000/getAttendance');
+    final url = Uri.parse('https://pythonapi-dtrp.onrender.com/getAttendance');
     // For App : http://192.168.235.94:5000
     final Map<String, String> data = {
       'username': reg_no,

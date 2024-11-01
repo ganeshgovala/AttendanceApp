@@ -3,7 +3,7 @@ import 'package:attendance/Colors.dart';
 import 'package:attendance/TextStyles/TextStyles.dart';
 import 'package:attendance/auth/auth_service.dart';
 import 'package:attendance/components/InputField.dart';
-import 'package:attendance/pages/bottom_navigation_bar.dart';
+import 'package:attendance/pages/new_homepage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -144,12 +144,12 @@ class _RegisterPageState extends State<RegisterPage> {
               InputField(
                   controller: _passwordController,
                   hintText: "Password",
-                  obsecureText: false),
+                  obsecureText: true),
               SizedBox(height: 15),
               InputField(
                   controller: _repasswordController,
                   hintText: "Re-Enter Password",
-                  obsecureText: false),
+                  obsecureText: true),
               SizedBox(height: 20),
               GestureDetector(
                 onTap: () {
@@ -240,9 +240,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             state.result['this_month_attended']!.toString());
                         Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) =>  BottomNavigationBarPage(reg_no: _regNoController.text.substring(0,10))
-                            ));
+                            MaterialPageRoute(builder: (context) => NewHomepage(reg_no: _regNoController.text.substring(0, 10)))
+                        );
                       }
                     });
                   } else if (state.result['till_now'] == 'Invalid') {

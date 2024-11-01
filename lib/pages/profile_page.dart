@@ -2,7 +2,6 @@ import 'package:attendance/BloC/LoginBloC.dart';
 import 'package:attendance/TextStyles/TextStyles.dart';
 import 'package:attendance/auth/auth_service.dart';
 import 'package:attendance/components/page_navigator_arrow.dart';
-import 'package:attendance/pages/Bunk-o-Meter.dart';
 import 'package:attendance/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,7 +17,7 @@ class ProfilePage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
              Container(
                   width: MediaQuery.of(context).size.width,

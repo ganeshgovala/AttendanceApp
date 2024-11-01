@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:attendance/BloC/AttendanceBloc.dart';
 import 'package:attendance/Colors.dart';
 import 'package:attendance/TextStyles/TextStyles.dart';
+import 'package:attendance/components/home_page_functions.dart';
 import 'package:attendance/components/page_navigator_arrow.dart';
 import 'package:attendance/pages/Bunk-o-Meter.dart';
 import 'package:attendance/pages/DateWisePage.dart';
@@ -27,32 +28,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String username = 'Loading...';
   String? password;
-
-  Future<Map<String, String>> reloadData(String reg_no, String password) async {
-    print("reloadData function called");
-    final url = Uri.parse('http://127.0.0.1:5000/updateData');
-    final Map<String, String> data = {
-      'username': reg_no,
-      'password': password,
-    };
-    final response = await http.post(url,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode(data));
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> result = jsonDecode(response.body);
-      return {
-        "till_now": result['message']['till_now'],
-        "till_now_attended": result['message']['till_now_attended'],
-        "this_month": result['message']['this_month'],
-        "this_month_attended": result['message']['this_month_attended'],
-        "name": result['message']['name']
-      };
-    }
-    print('reloadData function ended');
-    return {"till_now": "Invalid"};
-  }
+  String loadIcon = "Load";
+  String lastUpdated = "";
+  HomePageFunctions _homePageFunctions = HomePageFunctions();
 
   void getUserName(String reg_no) async {
     try {
@@ -77,27 +55,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Future<void> addAttendanceData(
-      String reg_no,
-      String till_now,
-      String till_now_attended,
-      String this_month,
-      String this_month_attended) async {
-    print("Add Attendance Function called");
-    await FirebaseFirestore.instance
-        .collection('Users')
-        .doc(reg_no)
-        .collection("Attendance")
-        .doc('AttendanceInfo')
-        .set({
-      'till_now': till_now,
-      'till_now_attended': till_now_attended,
-      'this_month': this_month,
-      'this_month_attended': this_month_attended,
-    });
-    print("Add Attendance Function Ended");
-  }
-
   @override
   void initState() {
     // TODO: implement initState
@@ -107,7 +64,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final attendancebloc = BlocProvider.of<AttendanceBloc>(context);
+    // final attendancebloc = BlocProvider.of<AttendanceBloc>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -185,16 +142,23 @@ class _HomePageState extends State<HomePage> {
                             GestureDetector(
                               onTap: () async {
                                 print("Tapped");
+                                setState(() {
+                                  loadIcon = "Loading";
+                                });
                                 final result =
-                                    await reloadData(widget.reg_no, password!);
+                                    await _homePageFunctions.reloadData(widget.reg_no, password!);
                                 print(result);
-                                addAttendanceData(
+                                _homePageFunctions.addAttendanceData(
                                     widget.reg_no,
                                     result['till_now']!,
                                     result['till_now_attended']!,
                                     result['this_month']!,
                                     result['this_month_attended']!);
                                 print("Data Added");
+                                setState(() {
+                                  loadIcon = "Load";
+                                  lastUpdated = DateTime.now().toIso8601String();
+                                });
                               },
                               child: Container(
                                   padding: EdgeInsets.all(8),
@@ -202,9 +166,9 @@ class _HomePageState extends State<HomePage> {
                                       color:
                                           const Color.fromARGB(29, 98, 98, 98),
                                       borderRadius: BorderRadius.circular(50)),
-                                  child: Icon(Icons.replay_outlined,
-                                      color: const Color.fromARGB(219, 0, 0, 0),
-                                      size: 20)),
+                                  child: loadIcon == "Load" ? Icon(Icons.replay_outlined, color: const Color.fromARGB(219, 0, 0, 0), size: 20)
+                                        : CircularProgressIndicator(color: Colors.black)
+                              ),
                             )
                           ],
                         ),
@@ -241,7 +205,7 @@ class _HomePageState extends State<HomePage> {
                                 );
                               }
                               return Text(
-                                "Data Doesn't exist",
+                                "Data not found",
                                 style: Textstyles()
                                     .boldTextStyle(55, const Color(0xFF161616)),
                               );
@@ -280,8 +244,15 @@ class _HomePageState extends State<HomePage> {
 
                                 final DocumentSnapshot<Map<String, dynamic>>
                                     data = snapshot.data!;
+                                if (data.exists) {
+                                  return Text(
+                                    "Attended : ${data['till_now_attended']}",
+                                    style: Textstyles().subHeading(
+                                        const Color.fromARGB(255, 39, 39, 39)),
+                                  );
+                                }
                                 return Text(
-                                  "Attended : ${data['till_now_attended']}",
+                                  "Attended : ",
                                   style: Textstyles().subHeading(
                                       const Color.fromARGB(255, 39, 39, 39)),
                                 );
@@ -289,6 +260,10 @@ class _HomePageState extends State<HomePage> {
                             )),
                       ],
                     )),
+              ),
+              SizedBox(height: 16),
+              Container(
+                child: Text(lastUpdated),
               ),
               SizedBox(height: 16),
               GestureDetector(
@@ -346,8 +321,15 @@ class _HomePageState extends State<HomePage> {
                             }
                             final DocumentSnapshot<Map<String, dynamic>> data =
                                 snapshot.data!;
+                            if (data.exists) {
+                              return Text(
+                                data['this_month'] + "%",
+                                style: Textstyles()
+                                    .boldTextStyle(55, const Color(0xFF161616)),
+                              );
+                            }
                             return Text(
-                              data['this_month'] + "%",
+                              "--",
                               style: Textstyles()
                                   .boldTextStyle(55, const Color(0xFF161616)),
                             );
@@ -385,11 +367,18 @@ class _HomePageState extends State<HomePage> {
 
                               final DocumentSnapshot<Map<String, dynamic>>
                                   data = snapshot.data!;
-                              return Text(
+                              if(data.exists) {
+                                return Text(
                                 "Attended : ${data['this_month_attended']}",
                                 style: Textstyles().subHeading(
                                     const Color.fromARGB(255, 39, 39, 39)),
                               );
+                              }
+                              return Text(
+                                  "Attended : ",
+                                  style: Textstyles().subHeading(
+                                      const Color.fromARGB(255, 39, 39, 39)),
+                                );
                             },
                           )),
                     ],
@@ -403,7 +392,7 @@ class _HomePageState extends State<HomePage> {
                 decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                         color: const Color.fromARGB(36, 0, 0, 0),
+                          color: const Color.fromARGB(36, 0, 0, 0),
                           blurRadius: 10),
                     ],
                     color: const Color.fromARGB(255, 255, 255, 255),

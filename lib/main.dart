@@ -1,23 +1,22 @@
-// ignore_for_file: unused_import
-
 import 'package:attendance/BloC/AttendanceBloc.dart';
 import 'package:attendance/BloC/LoginBloC.dart';
 import 'package:attendance/BloC/RegisterBloc.dart';
 import 'package:attendance/firebase_options.dart';
-import 'package:attendance/pages/DateWisePage.dart';
-import 'package:attendance/pages/HomePage.dart';
 import 'package:attendance/pages/Splash_page.dart';
-import 'package:attendance/pages/bottom_navigation_bar.dart';
-import 'package:attendance/pages/login_page.dart';
-import 'package:attendance/pages/openingPage.dart';
-import 'package:attendance/pages/till_now_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/services.dart';
 
 void main() async {
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent, // Makes the status bar transparent
+      statusBarIconBrightness: Brightness.dark, // Sets icon color for light backgrounds
+    ),
+  );
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -48,7 +47,7 @@ class _MyAppState extends State<MyApp> {
           BlocProvider(create: (context) => AttendanceBloc(),),
           BlocProvider(create: (context) => RegisterBloc()),
         ],
-        child: BottomNavigationBarPage(reg_no: '23pa1a0577',),
+        child: SplashScreen(),
       ),
       theme: ThemeData(
         textTheme: GoogleFonts.figtreeTextTheme(),

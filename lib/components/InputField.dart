@@ -35,10 +35,10 @@ class _InputFieldState extends State<InputField> {
         obscureText: widget.obsecureText,
         controller: widget.controller,
         decoration: InputDecoration(
-          suffixIcon: widget.hintText == "Password" 
+          suffixIcon: widget.hintText == "Password" || widget.hintText == "Re-Enter Password"
                       ? GestureDetector(
                         onTap: () {
-                          if(widget.hintText == "Password") {
+                          if(widget.hintText == "Password" || widget.hintText == "Re-Enter Password") {
                             setState(() {
                               widget.obsecureText = !widget.obsecureText;
                             });
@@ -57,7 +57,7 @@ class _InputFieldState extends State<InputField> {
                       ),
           hintText: widget.hintText,
           hintStyle: GoogleFonts.figtree(
-          fontSize: 20,
+          fontSize: 18,
           fontWeight: FontWeight.w600,
           color: const Color.fromARGB(255, 50, 50, 50),
         ),
@@ -65,7 +65,7 @@ class _InputFieldState extends State<InputField> {
         focusedBorder: InputBorder.none,
         ),
         style: GoogleFonts.figtree(
-          fontSize: 20,
+          fontSize: 18,
           fontWeight: FontWeight.w600,
           color: const Color.fromARGB(255, 18, 18, 18)
         )

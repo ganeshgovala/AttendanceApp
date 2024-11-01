@@ -23,7 +23,7 @@ class _TillNowPageState extends State<TillNowPage> {
 
   void fetchSubWiseData(reg_no, password) async {
     print("Fetching data...");
-    final url = Uri.parse('http://127.0.0.1:5000/tillNowSubWise');
+    final url = Uri.parse('https://pythonapi-dtrp.onrender.com/tillNowSubWise');
     final Map<String, String> data = {
       'username': reg_no,
       'password': password
@@ -149,14 +149,14 @@ class _TillNowPageState extends State<TillNowPage> {
                                     return Text(
                                       "Loading...",
                                       style: Textstyles().boldTextStyle(
-                                          45, const Color(0xFF161616)),
+                                         MediaQuery.of(context).size.width * 0.1, const Color(0xFF161616)),
                                     );
                                   }
                                   if (snapshot.hasError) {
                                     return Text(
                                       "Error 🙁",
                                       style: Textstyles().boldTextStyle(
-                                          45, const Color(0xFF161616)),
+                                          MediaQuery.of(context).size.width * 0.1, const Color(0xFF161616)),
                                     );
                                   }
                                   final DocumentSnapshot<Map<String, dynamic>>
@@ -165,13 +165,13 @@ class _TillNowPageState extends State<TillNowPage> {
                                     return Text(
                                       data['till_now'] + "%",
                                       style: Textstyles().boldTextStyle(
-                                          45, const Color(0xFF161616)),
+                                          MediaQuery.of(context).size.width * 0.1, const Color(0xFF161616)),
                                     );
                                   }
                                   return Text(
                                     "Data Doesn't exist",
                                     style: Textstyles().boldTextStyle(
-                                        40, const Color(0xFF161616)),
+                                        MediaQuery.of(context).size.width * 0.1, const Color(0xFF161616)),
                                   );
                                 }),
                           ],
@@ -220,7 +220,7 @@ class _TillNowPageState extends State<TillNowPage> {
                                     data = snapshot.data!;
                                 return Text(
                                   "${data['till_now_attended']}",
-                                  style: Textstyles().boldTextStyle(25, Colors.black)
+                                  style: Textstyles().boldTextStyle(MediaQuery.of(context).size.width * 0.06, Colors.black)
                                 );
                               },
                             )

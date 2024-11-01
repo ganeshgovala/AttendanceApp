@@ -20,7 +20,7 @@ class _ThisMonthPageState extends State<ThisMonthPage> {
 
   void fetchSubWiseData(String reg_no, String password) async {
     print("Fetching data...");
-    final url = Uri.parse('http://127.0.0.1:5000/thisMonthSubWise');
+    final url = Uri.parse('https://pythonapi-dtrp.onrender.com/thisMonthSubWise');
     final Map<String, String> data = {'username': reg_no, 'password': password};
     final response = await http.post(
       url,
@@ -157,13 +157,13 @@ class _ThisMonthPageState extends State<ThisMonthPage> {
                                     return Text(
                                       data['till_now'] + "%",
                                       style: Textstyles().boldTextStyle(
-                                          45, const Color(0xFF161616)),
+                                          MediaQuery.of(context).size.width * 0.1, const Color(0xFF161616)),
                                     );
                                   }
                                   return Text(
                                     "Data Doesn't exist",
                                     style: Textstyles().boldTextStyle(
-                                        40, const Color(0xFF161616)),
+                                        MediaQuery.of(context).size.width * 0.1, const Color(0xFF161616)),
                                   );
                                 }),
                           ],
@@ -212,7 +212,7 @@ class _ThisMonthPageState extends State<ThisMonthPage> {
                                     data = snapshot.data!;
                                 return Text("${data['till_now_attended']}",
                                     style: Textstyles()
-                                        .boldTextStyle(25, Colors.black));
+                                        .boldTextStyle(MediaQuery.of(context).size.width * 0.06, Colors.black));
                               },
                             )
                           ],
